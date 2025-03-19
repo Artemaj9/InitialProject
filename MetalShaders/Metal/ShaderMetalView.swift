@@ -6,7 +6,6 @@ class ShaderMetalView: MTKView {
     var pipelineState: MTLRenderPipelineState!
     var effect: String!
     var time: Float = 0
-    var texture: MTLTexture?
 
     let vertices: [SIMD2<Float>] = [
         SIMD2<Float>(0, 0),
@@ -64,10 +63,6 @@ class ShaderMetalView: MTKView {
         renderEncoder.setFragmentBytes(&time, length: MemoryLayout<Float>.size, index: 0)
         var resolution = SIMD2<Float>(Float(drawable.texture.width), Float(drawable.texture.height))
         renderEncoder.setFragmentBytes(&resolution, length: MemoryLayout<SIMD2<Float>>.size, index: 1)
-
-        if let texture = texture {
-            renderEncoder.setFragmentTexture(texture, index: 0)
-        }
 
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
